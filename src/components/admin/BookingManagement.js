@@ -79,38 +79,39 @@ const BookingManagement = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Booking Management</h1>
-          <p className="text-gray-600">Manage and track all venue bookings</p>
-        </div>
-        <div className="mt-4 sm:mt-0">
-          <span className="text-sm text-gray-500">
-            Total Bookings: {filteredBookings.length}
-          </span>
+    <div className="space-y-8">
+      {/* Stats Summary */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Booking Overview</h2>
+            <p className="text-gray-600">Manage and track all venue bookings</p>
+          </div>
+          <div className="text-right">
+            <div className="text-3xl font-bold text-primary-600">{filteredBookings.length}</div>
+            <div className="text-sm text-gray-500">Total Bookings</div>
+          </div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
               placeholder="Search bookings..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="pl-12 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             />
           </div>
           
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
           >
             <option value="all">All Status</option>
             <option value="pending">Pending</option>
@@ -121,22 +122,22 @@ const BookingManagement = () => {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
           >
             <option value="all">All Types</option>
             <option value="hall">Marriage Halls</option>
             <option value="room">Rooms</option>
           </select>
 
-          <button className="flex items-center justify-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            <Filter className="w-4 h-4 mr-2" />
+          <button className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all duration-200 shadow-lg hover:shadow-xl">
+            <Filter className="w-5 h-5 mr-2" />
             Filter
           </button>
         </div>
       </div>
 
       {/* Bookings Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -248,32 +249,35 @@ const BookingManagement = () => {
         </div>
 
         {filteredBookings.length === 0 && (
-          <div className="text-center py-12">
-            <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">No bookings found</p>
+          <div className="text-center py-16">
+            <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Calendar className="w-10 h-10 text-gray-400" />
+            </div>
+            <p className="text-gray-500 font-medium text-lg">No bookings found</p>
+            <p className="text-gray-400 text-sm mt-2">Bookings will appear here once customers start booking venues</p>
           </div>
         )}
       </div>
 
       {/* Booking Details Modal */}
       {selectedBooking && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Booking Details</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="p-8">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Booking Details</h2>
                 <button
                   onClick={() => setSelectedBooking(null)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 hover:text-gray-700 transition-all duration-200"
                 >
                   ✕
                 </button>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {/* Customer Information */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-800 mb-3">Customer Information</h3>
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-2xl">
+                  <h3 className="font-bold text-gray-800 mb-4 text-lg">Customer Information</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex items-center space-x-2">
                       <User className="w-4 h-4 text-gray-500" />
@@ -294,8 +298,8 @@ const BookingManagement = () => {
                 </div>
 
                 {/* Booking Information */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-800 mb-3">Booking Information</h3>
+                <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-2xl">
+                  <h3 className="font-bold text-gray-800 mb-4 text-lg">Booking Information</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex items-center space-x-2">
                       <MapPin className="w-4 h-4 text-gray-500" />
@@ -332,8 +336,8 @@ const BookingManagement = () => {
                 </div>
 
                 {/* Payment Information */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-800 mb-3">Payment Information</h3>
+                <div className="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-2xl">
+                  <h3 className="font-bold text-gray-800 mb-4 text-lg">Payment Information</h3>
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold">Total Amount:</span>
                     <span className="text-xl font-bold text-primary-600">
@@ -353,21 +357,21 @@ const BookingManagement = () => {
 
                 {/* Special Requests */}
                 {selectedBooking.specialRequests && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-gray-800 mb-3">Special Requests</h3>
-                    <p className="text-sm text-gray-600">{selectedBooking.specialRequests}</p>
+                  <div className="bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-2xl">
+                    <h3 className="font-bold text-gray-800 mb-4 text-lg">Special Requests</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">{selectedBooking.specialRequests}</p>
                   </div>
                 )}
 
                 {/* Status Update */}
                 {selectedBooking.status === 'pending' && (
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 pt-4">
                     <button
                       onClick={() => {
                         handleStatusUpdate(selectedBooking.id, 'confirmed');
                         setSelectedBooking(null);
                       }}
-                      className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
+                      className="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold"
                     >
                       Confirm Booking
                     </button>
@@ -376,7 +380,7 @@ const BookingManagement = () => {
                         handleStatusUpdate(selectedBooking.id, 'cancelled');
                         setSelectedBooking(null);
                       }}
-                      className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
+                      className="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-6 rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold"
                     >
                       Cancel Booking
                     </button>

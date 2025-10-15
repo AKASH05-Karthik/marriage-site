@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Star, Users, Wifi, Car, Music, Utensils, Building, Phone, Mail, Clock } from 'lucide-react';
+import { Calendar, MapPin, Star, Users, Wifi, Car, Music, Utensils, Building, Phone, Mail, Clock, LogOut } from 'lucide-react';
 import HallBooking from './HallBooking';
 import RoomBooking from './RoomBooking';
 import { useBooking } from '../context/BookingContext';
+import { useAuth } from '../context/AuthContext';
 
 const LandingPage = () => {
   const [activeTab, setActiveTab] = useState('halls');
   const [isLoading, setIsLoading] = useState(false);
   const { halls, rooms } = useBooking();
+  const { user, logout } = useAuth();
 
   const features = [
     { icon: Calendar, title: "Easy Booking", description: "Book your venue in just a few clicks" },
@@ -48,12 +50,31 @@ const LandingPage = () => {
               </div>
               <h1 className="text-2xl font-bold text-gray-800">Royal Venues</h1>
             </div>
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-8 items-center">
               <a href="#home" className="text-gray-600 hover:text-primary-600 transition-colors cursor-pointer">Home</a>
               <a href="#venues" className="text-gray-600 hover:text-primary-600 transition-colors cursor-pointer">Venues</a>
               <a href="#services" className="text-gray-600 hover:text-primary-600 transition-colors cursor-pointer">Services</a>
               <a href="#contact" className="text-gray-600 hover:text-primary-600 transition-colors cursor-pointer">Contact</a>
-              <a href="/admin" className="text-primary-600 hover:text-primary-700 font-semibold transition-colors">Admin</a>
+              
+              {user ? (
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2 bg-gradient-to-r from-primary-50 to-purple-50 px-4 py-2 rounded-lg">
+                    <div className="w-8 h-8 bg-gradient-to-r from-primary-600 to-primary-700 rounded-full flex items-center justify-center">
+                      <span className="text-white text-sm font-bold">{user.username.charAt(0).toUpperCase()}</span>
+                    </div>
+                    <span className="text-gray-700 font-semibold">Welcome, {user.username}</span>
+                  </div>
+                  <button
+                    onClick={logout}
+                    className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <a href="/admin" className="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-4 py-2 rounded-lg hover:from-primary-700 hover:to-primary-800 transition-all duration-200 font-semibold">Sign In</a>
+              )}
             </nav>
           </div>
         </div>
@@ -407,11 +428,11 @@ const LandingPage = () => {
             {/* Quick Links */}
             <div>
               <h4 className="text-xl font-semibold mb-6 text-white">Quick Links</h4>
-              <ul className="space-y-3">
-                <li><a href="#home" className="text-gray-400 hover:text-white transition-colors text-base block">Home</a></li>
-                <li><a href="#venues" className="text-gray-400 hover:text-white transition-colors text-base block">Venues</a></li>
-                <li><a href="#services" className="text-gray-400 hover:text-white transition-colors text-base block">Services</a></li>
-                <li><a href="#contact" className="text-gray-400 hover:text-white transition-colors text-base block">Contact</a></li>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#home" className="hover:text-white transition-colors text-lg">Home</a></li>
+                <li><a href="#venues" className="hover:text-white transition-colors text-lg">Venues</a></li>
+                <li><a href="#services" className="hover:text-white transition-colors text-lg">Services</a></li>
+                <li><a href="#contact" className="hover:text-white transition-colors text-lg">Contact</a></li>
               </ul>
             </div>
             

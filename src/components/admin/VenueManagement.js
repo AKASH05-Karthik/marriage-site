@@ -14,41 +14,47 @@ const VenueManagement = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Venue Management</h1>
-          <p className="text-gray-600">Manage your marriage halls and rooms</p>
+    <div className="space-y-8">
+      {/* Stats Summary */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Venue Overview</h2>
+            <p className="text-gray-600">Manage your marriage halls and rooms</p>
+          </div>
+          <button className="btn-primary flex items-center space-x-2 shadow-lg">
+            <Plus className="w-5 h-5" />
+            <span>Add New Venue</span>
+          </button>
         </div>
-        <button className="mt-4 sm:mt-0 btn-primary flex items-center space-x-2">
-          <Plus className="w-5 h-5" />
-          <span>Add New Venue</span>
-        </button>
       </div>
 
       {/* Tab Navigation */}
-      <div className="bg-white rounded-lg p-1 shadow-sm border border-gray-200 inline-flex">
-        <button
-          onClick={() => setActiveTab('halls')}
-          className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-            activeTab === 'halls'
-              ? 'bg-primary-600 text-white shadow-md'
-              : 'text-gray-600 hover:text-primary-600'
-          }`}
-        >
-          Marriage Halls ({halls.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('rooms')}
-          className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-            activeTab === 'rooms'
-              ? 'bg-primary-600 text-white shadow-md'
-              : 'text-gray-600 hover:text-primary-600'
-          }`}
-        >
-          Rooms ({rooms.length})
-        </button>
+      <div className="flex justify-center">
+        <div className="bg-white rounded-2xl p-2 shadow-lg border border-gray-100 inline-flex">
+          <button
+            onClick={() => setActiveTab('halls')}
+            className={`px-8 py-3 rounded-xl font-semibold transition-all flex items-center space-x-2 ${
+              activeTab === 'halls'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg'
+                : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50'
+            }`}
+          >
+            <Building className="w-5 h-5" />
+            <span>Marriage Halls ({halls.length})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('rooms')}
+            className={`px-8 py-3 rounded-xl font-semibold transition-all flex items-center space-x-2 ${
+              activeTab === 'rooms'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg'
+                : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50'
+            }`}
+          >
+            <Bed className="w-5 h-5" />
+            <span>Rooms ({rooms.length})</span>
+          </button>
+        </div>
       </div>
 
       {/* Halls Tab */}

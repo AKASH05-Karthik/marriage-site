@@ -48,17 +48,18 @@ const CustomerManagement = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Customer Management</h1>
-          <p className="text-gray-600">View and manage customer information</p>
-        </div>
-        <div className="mt-4 sm:mt-0">
-          <span className="text-sm text-gray-500">
-            Total Customers: {filteredCustomers.length}
-          </span>
+    <div className="space-y-8">
+      {/* Stats Summary */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Customer Overview</h2>
+            <p className="text-gray-600">View and manage customer information</p>
+          </div>
+          <div className="text-right">
+            <div className="text-3xl font-bold text-primary-600">{filteredCustomers.length}</div>
+            <div className="text-sm text-gray-500">Total Customers</div>
+          </div>
         </div>
       </div>
 

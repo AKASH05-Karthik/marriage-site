@@ -3,33 +3,48 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if admin is already logged in
-    const adminAuth = localStorage.getItem('adminAuth');
-    if (adminAuth === 'true') {
-      setIsAdminAuthenticated(true);
+    // Check if user is already logged in
+    const userAuth = localStorage.getItem('userAuth');
+    if (userAuth) {
+      try {
+        const userData = JSON.parse(userAuth);
+        if (userData.isAuthenticated) {
+          setUser(userData);
+        }
+      } catch (error) {
+        localStorage.removeItem('userAuth');
+      }
     }
     setIsLoading(false);
   }, []);
 
-  const loginAdmin = () => {
-    setIsAdminAuthenticated(true);
-    localStorage.setItem('adminAuth', 'true');
+  const login = (userType, username) => {
+    const userData = {
+      type: userType,
+      username: username,
+      isAuthenticated: true
+    };
+    setUser(userData);
+    localStorage.setItem('userAuth', JSON.stringify(userData));
   };
 
-  const logoutAdmin = () => {
-    setIsAdminAuthenticated(false);
-    localStorage.removeItem('adminAuth');
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('userAuth');
   };
 
   const value = {
-    isAdminAuthenticated,
+    user,
     isLoading,
-    loginAdmin,
-    logoutAdmin
+    isAuthenticated: !!user,
+    isAdmin: user?.type === 'admin',
+    isUser: user?.type === 'user',
+    login,
+    logout
   };
 
   return (
